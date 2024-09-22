@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbarLinkHover {
+    @apply hover:bg-gray-100 rounded-lg;
+}
+.navbarLinkActive {
+    @apply bg-TealBlue text-white hover:bg-TealBlue;
+}
