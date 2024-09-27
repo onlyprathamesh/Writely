@@ -36,8 +36,7 @@ export default function SignUp() {
     }
   };
   return (
-    <>
-      <Header />
+    <>  
       <div className="mt-20 flex md:block">
         <div className="flex p-5 max-w-4xl mx-auto flex-col md:flex-row md:items-center">
           <div className="flex-1 font-bold text-3xl mb-6 md:mb-0">
