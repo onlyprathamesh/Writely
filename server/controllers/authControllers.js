@@ -36,10 +36,12 @@ const handleSignInUser = async (req, res, next) => {
       return next(customError(401, "Invalid credentials."));
     }
     const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET_KEY);
+
+    const {password:userPassword, ...rest} = userExists._doc;
     res
       .status(200)
       .cookie("accecc-token", token, { httpOnly: true })
-      .json({ message: "Succussfully Logged In." });
+      .json({ message: "Succussfully Logged In.", rest });
   } catch (error) {
     next(error);
   }
