@@ -29,7 +29,6 @@ const handleSignInUser = async (req, res, next) => {
     if (!userExists) {
       return next(customError(401, "Could not find user."));
     }
-    console.log("USER", password);
     const validUser = await userExists.comparePassword(password);
 
     if (!validUser) {

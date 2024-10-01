@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  signInStart,
+  signInSuccess,
+  signInFalse,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SignIp() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+
   const handleFormData = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -14,8 +21,7 @@ export default function SignIp() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      setErrorMessage(null);
+      dispatch(signInStart());
       const response = await fetch("http://localhost:8000/api/auth/signin", {
         method: "POST",
         headers: {
@@ -25,13 +31,13 @@ export default function SignIp() {
       });
       const result = await response.json();
       if (!response.ok) {
-        setErrorMessage(result.message);
-        setLoading(false);
-      } else navigate("/");
+        dispatch(signInFalse(result.message));
+      } else {
+        dispatch(signInSuccess(result));
+        navigate("/");
+      }
     } catch (error) {
-      const result = await response.json();
-      setErrorMessage(result.message);
-      setLoading(false);
+      dispatch(signInFalse(error.message));
     }
   };
   return (
