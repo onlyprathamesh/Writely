@@ -36,7 +36,7 @@ const handleSignInUser = async (req, res, next) => {
     }
     const token = jwt.sign({ id: userExists._id }, process.env.JWT_SECRET_KEY);
 
-    const {password:userPassword, ...rest} = userExists._doc;
+    const { password: userPassword, ...rest } = userExists._doc;
     res
       .status(200)
       .cookie("accecc-token", token, { httpOnly: true })
@@ -46,4 +46,39 @@ const handleSignInUser = async (req, res, next) => {
   }
 };
 
-module.exports = { handleSignUpUser, handleSignInUser };
+const handleGoogleAuth = async (req, res, next) => {
+  const { name, email, photoURL } = req.body;
+  try {
+    const userExist = await User.findOne({ email });
+    if (userExist) {
+      const token = jwt.sign({ id: userExist._id }, process.env.JWT_SECRET_KEY);
+
+      const { password: userPassword, ...rest } = userExist._doc;
+
+      res
+        .status(200)
+        .cookie("access-token", token, { httpOnly: true })
+        .json({ message: "Successfully Logged In.", rest });
+    } else {
+      const tempPassword = Math.random().toString(36).slice(-8);
+      const newUser = await User.create({
+        username: `${name.toLowerCase().split(" ").join("")}${Math.random().toString(9).slice(-4)}`,
+        email,
+        password: tempPassword,
+        profilePicture: photoURL,
+      });
+
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+      const { password: userPassword, ...rest } = newUser._doc;
+
+      res
+        .status(200)
+        .cookie("access-token", token, { httpOnly: true })
+        .json({ message: "Account created successfully.", rest });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { handleSignUpUser, handleSignInUser, handleGoogleAuth };

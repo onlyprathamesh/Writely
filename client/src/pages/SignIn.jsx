@@ -7,6 +7,7 @@ import {
   signInFalse,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import OAuth from "../components/OAuth";
 
 export default function SignIp() {
   const navigate = useNavigate();
@@ -97,6 +98,7 @@ export default function SignIp() {
                   "Sign Ip"
                 )}
               </Button>
+              <OAuth />
             </form>
             <div className="flex gap-2 mt-5">
               <span>Dont have an account? </span>
