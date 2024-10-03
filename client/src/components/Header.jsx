@@ -70,14 +70,6 @@ export default function Header() {
           Home
         </Link>
         <Link
-          to="/dashboard"
-          className={`p-2 navbarLinkHover ${
-            isActive("/dashboard") ? "navbarLinkActive" : "bg-white text-black"
-          }`}
-        >
-          Dashboard
-        </Link>
-        <Link
           to="/about"
           className={`p-2 navbarLinkHover ${
             isActive("/about") ? "navbarLinkActive" : "bg-white text-black"
