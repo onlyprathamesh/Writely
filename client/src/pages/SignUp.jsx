@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Alert, Button, Label, Spinner, TextInput } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import OAuth from "../components/OAuth";
+import { useSelector } from "react-redux";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
   const handleFormData = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
