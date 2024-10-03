@@ -1,12 +1,15 @@
 "use client";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
-import { FaMoon } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 export default function Header() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const isActive = (path) => location.pathname === path;
   const { currentUser } = useSelector((state) => state.user);
+  const {theme} = useSelector((state) => state.theme)
   return (
     <Navbar fluid rounded className="border drop-shadow-lg">
       <Navbar.Brand href="/">
@@ -15,8 +18,8 @@ export default function Header() {
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2 gap-2">
-        <Button pill className="w-12 h-10 hidden sm:inline" color={"gray"}>
-          <FaMoon />
+        <Button pill className="w-12 h-10 hidden sm:inline" color={"gray"} onClick={()=> dispatch(toggleTheme())}>
+          {theme === 'dark' ? <FaSun /> : <FaMoon />}
         </Button>
         {currentUser ? (
           <Dropdown className="max-w-30"
