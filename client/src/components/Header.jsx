@@ -32,7 +32,7 @@ export default function Header() {
       <div className="flex md:order-2 gap-2">
         <Button
           pill
-          className="w-12 h-10 hidden sm:inline"
+          className="w-12 h-10"
           color={"gray"}
           onClick={() => dispatch(toggleTheme())}
         >
@@ -59,7 +59,7 @@ export default function Header() {
                 {currentUser.rest.email}
               </span>
             </Dropdown.Header>
-            <Link to={"/dropdown?tab=profile"}>
+            <Link to={"/dashboard?tab=profile"}>
               <Dropdown.Item className="text-lg font-semibold">
                 {" "}
                 Profile
