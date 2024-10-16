@@ -3,7 +3,6 @@ const { customError } = require("./errorHandler");
 
 const verifyUser = (req, res, next) => {
   const token = req.cookies.access_token;
-  console.log("token: ", token)
   if (!token) {
     return next(customError(401, "Unauthorized"));
   }
